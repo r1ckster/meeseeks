@@ -4,7 +4,7 @@
 
     <groupId>io.r1ck.meeseeks</groupId>
     <artifactId>meeseeks</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.3</version>
 
     <name>Meeseeks</name>
     <description>Framework for scripts.</description>
@@ -17,7 +17,7 @@
         <developerConnection>scm:git:git@githubr1ck:r1ckster/meeseeks.git
         </developerConnection>
         <url>git@githubr1ck:r1ckster/meeseeks.git</url>
-        <tag>HEAD</tag>
+        <tag>v0.0.3</tag>
     </scm>
 
     <issueManagement>
