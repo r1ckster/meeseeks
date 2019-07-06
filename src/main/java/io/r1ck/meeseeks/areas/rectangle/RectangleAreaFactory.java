@@ -12,7 +12,7 @@ public final class RectangleAreaFactory {
     private RectangleAreaFactory() {
     }
     
-    public RectangleArea create(final ClientContext ctx, final Tile southWest,
+    public static RectangleArea create(final ClientContext ctx, final Tile southWest,
                          final int width, final int height) {
         return new RectangleAreaImpl(ctx, southWest, width, height);
     }
