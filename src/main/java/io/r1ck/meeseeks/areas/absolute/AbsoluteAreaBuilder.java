@@ -5,6 +5,7 @@
  */
 package io.r1ck.meeseeks.areas.absolute;
 
+import io.r1ck.meeseeks.areas.rectangle.RectangleAreaFactory;
 import org.powerbot.script.Area;
 import org.powerbot.script.Tile;
 import org.powerbot.script.rt6.ClientContext;
@@ -40,6 +41,14 @@ public final class AbsoluteAreaBuilder {
     public AbsoluteAreaBuilder add(final Tile tile) {
         this.area.add(tile);
         return this;
+    }
+    
+    public AbsoluteAreaBuilder addRectangular(final Tile southWest,
+                                              final int width,
+                                              final int height) {
+        return this.add(
+            RectangleAreaFactory.create(this.area.ctx, southWest, width, height)
+        );
     }
     
     public AbsoluteArea build() {
