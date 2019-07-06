@@ -22,6 +22,7 @@ final class RectangleAreaImpl extends ClientAccessor implements RectangleArea {
     private final Tile southEast;
     private final Tile southWest;
     
+    private final int floor;
     private final int height;
     private final int width;
     
@@ -30,6 +31,7 @@ final class RectangleAreaImpl extends ClientAccessor implements RectangleArea {
     RectangleAreaImpl(final ClientContext ctx, final Tile southWest,
                       final int width, final int height) {
         super(ctx);
+        this.floor = southWest.floor();
         this.height = height;
         this.northEast = southWest.derive(width - 1, height - 1);
         this.northWest = southWest.derive(0, height - 1);
@@ -43,12 +45,17 @@ final class RectangleAreaImpl extends ClientAccessor implements RectangleArea {
     public Tile center() {
         return new Tile(
             this.northWest.x() + ((this.northEast.x() - this.northWest.x()) / 2),
-            this.southEast.y() + ((this.northEast.y() - this.southEast.y()) / 2)
+            this.southEast.y() + ((this.northEast.y() - this.southEast.y()) / 2),
+            this.floor
         );
     }
     
     @Override
     public boolean contains(final Locatable coordinate) {
+        if (this.floor != coordinate.tile().floor()) {
+            return false;
+        }
+        
         final int cx = coordinate.tile().x();
         final int cy = coordinate.tile().y();
         
@@ -109,7 +116,7 @@ final class RectangleAreaImpl extends ClientAccessor implements RectangleArea {
         if (this.tiles.isEmpty()) {
             for (int x = minX; x <= maxX; ++x) {
                 for (int y = minY; y <= maxY; ++y) {
-                    this.tiles.add(new Tile(x, y));
+                    this.tiles.add(new Tile(x, y, this.floor));
                 }
             }
         }
@@ -118,9 +125,10 @@ final class RectangleAreaImpl extends ClientAccessor implements RectangleArea {
     
     @Override
     public String toString() {
-        return String.format("RectangleArea{sw=(%d, %d), ne=(%d, %d), width=%d, height=%d}",
+        return String.format("RectangleArea{sw=(%d, %d), ne=(%d, %d), floor=%d, width=%d, height=%d}",
             this.southWest.x(), this.southWest.y(),
             this.northEast.x(), this.northEast.y(),
+            this.floor,
             this.width, this.height
         );
     }
